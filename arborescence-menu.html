@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Title </title>
+</head>
+
+<!-- Création d'une feuille de style css que je vais solliciter lors d'évènements -->
+<style>
+    /* permet de faire disparaître une balise ou de la faire ré-apparaître */
+    .hidden {
+        display: none;
+    }
+
+    /* permet de modifier l'état de la souris (devient une main) lorsqu'elle pointe les éléments a dans ma liste aillant l'id menu */
+    #menu a {
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <h1>Javascript</h1>
+
+    <!-- Création d'une liste imbriquée avec des sous valeurs -->
+    <ul id="menu">
+        <li>
+            <a>Fruits</a>
+            <ul>
+                <li>Pommes</li>
+                <li>Poires</li>
+                <li><a>Fruits secs</a>
+                    <ul>
+                        <li>Noix</li>
+                        <li>Noisettes</li>
+                        <li>Cajou</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a>Légumes</a>
+            <ul>
+                <li>Pomme de terre</li>
+                <li>Carotte</li>
+                <li>Navet</li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        // Création d'une variable fonction qui a en argument event
+        // On fait appel à l'argument de la fonction auquel on indique que son path (permet de remonter la hiérarchie) et [de combien l'on souhaite remonté] (1 pour le père 2 pour le grand père ...) auquel l'on séléctionne les listes ul
+        // classList.toggle permet d'ajouter ou de supprimer la classe hidden au père path[1] de toutes les listes ul, et donc on fait apparaître ou disparaître le bloc enfant (ul)
+        var menuHandler = (event) => {
+            event.path[1].querySelector("ul").classList.toggle("hidden");
+        };
+        // Variable permettant de cibler toutes les balises "a" enfant de la balise ayant l'id "menu" (ul)
+        var links = document.querySelectorAll("#menu a");
+        // Boucle qui parcoure tout les link présent dans links et qui leurs ajoute l'évènement click qui fait apparaître ou disparaître leurs balises enfant au clic grâce à l'évènement menuHandler programmer plus haut
+        for (link of links) {
+            link.addEventListener("click", menuHandler);
+        }
+    </script>
+</body>
+</html>

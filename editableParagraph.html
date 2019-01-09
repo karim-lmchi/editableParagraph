@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+ <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Title </title>
+</head>
+
+<style>
+    #tooltip {
+        width: 40%;
+        height: 70px;
+        background-color: red;
+    }
+</style>
+
+<body>
+    <h1>Javascript DOM</h1>
+
+
+    <!-- Rendre un paragraphe éditable -->
+    <h2>Paragraphe éditable :</h2>
+    <!-- Création du paragraphe -->
+    <p id="text" style="cursor: pointer">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin nulla pulvinar maximus laoreet. In hac habitasse platea dictumst. Fusce in molestie ex, id vulputate ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum hendrerit ex mauris, vel vulputate lectus auctor posuere. Cras tempus ipsum ligula, quis pretium ipsum sagittis sit amet. Pellentesque volutpat sit amet velit non dictum. Sed commodo commodo faucibus. Pellentesque faucibus elementum sapien, ut iaculis neque molestie sit amet. Aliquam quis ullamcorper diam. Suspendisse potenti. Quisque ac quam posuere, facilisis leo eget, elementum augue. Nunc ac diam vel turpis sagittis volutpat. </p>
+
+
+
+    <script>
+        
+        /*
+        Création d'un paragraphe éditable au clic ET
+        Lorsque la souris quitte la zone éditable (onblur) alors le paragraphe prend le nouveau contenu saisi
+        */
+        
+        // Création d'une fonction à laquel on fera appel lors du clic, elle aura pour argument un évènement
+        function startEdit(event) {
+            // Variable qui indique que l'évènement s'applique sur ce quoi l'on a cliqué
+            var $element = event.target;
+            // Variable qui récupère le texte de ce sur quoi l'on a cliqué
+            var $elemenText = $element.textContent.trim();
+            // Variable qui pointe vers le parent du paragraphe body et qui sera nécessaire à .replaceChild; il s'agit d'un terme générique qui ciblera à chaque fois le parent de ce sur quoi on clique
+            var $parent = $element.parentElement;
+
+            // Création du textarea qui prendra la place du paragraphe
+            var textarea = document.createElement("textarea");
+            // Affectation du texte contenu dans le paragraphe au textarea
+            textarea.textContent = $elemenText;
+            // Dimensionnement du textarea pour l'aspect visuel à l'affichage, 15 lignes et 45 colonnes
+            textarea.setAttribute("rows", "15");
+            textarea.setAttribute("cols", "45");
+            // On indique que lorsqu'il n'y plus de focus surle textarea cela fait appe; à la fonction endEdit
+            textarea.onblur = endEdit;
+
+            // Insertion dans le DOM, l'élément sur lequel on clique devient un textarea
+            $parent.replaceChild(textarea, $element);
+        }
+        // Création d'une fonction qui stop l'édition du paragraphe lorsque la souris n'est plus dans l'élément
+        function endEdit (event) {
+            // Les variables cibles sont les mêmes que la précédente fonction
+            var $element = event.target;
+            // Rajout d'un texte pour qui si l'intégralité du texte est effacer cela évite d'avoir une zone vide sur laquel on ne puisse plus faire de modification
+            var $elemenText = $element.value.trim() || "saisir un texte ...";
+            var $parent = $element.parentElement;
+            
+            // Création d'un paragraphe qui prendra la place du textarea
+            var para = document.createElement("p");
+            para.textContent = $elemenText;
+            // On indique que lors du clic sur ce paragraphe cela fait appel à la fonction startEdit
+            para.onclick = startEdit;
+            // Remplacement du textarea par le paragraphe créé
+            $parent.replaceChild(para, $element);
+        }
+        
+        // Liaison entre l'élément, l'évènement et la fonction
+        // je créé un évènement au clic sur la balise ayant l'id "text" qui exécute la fonction sartEdit
+        document.getElementById("text").onclick = startEdit;
+    </script>
+
+</body>
+</html>

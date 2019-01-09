@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Title </title>
+</head>
+
+<body>
+    <h1>Javascript</h1>
+
+    <button id="btAddPhone">Ajouter un numéro</button>
+
+    <div id="phoneList">
+
+    </div>
+
+    <script>
+        // Variables pointant nos éléments, les noms de variables du DOM commencent par "$"(norme que l'on s'est fixé nous même)
+        var $btAddPhone = document.getElementById("btAddPhone");
+        var $phoneList = document.getElementById("phoneList");
+
+        // évènement régissant l'ajout d'un nouveau numéro de phone
+        function addPhone() {
+            // initiation d'une variable locale qui créé un nouvelle élément "div" qui n'existe pas dans le DOM
+            var phoneDiv = document.createElement("div");
+            // variable qui créé une zone de saisie dans le DOM
+            var phoneInput = document.createElement("input");
+            // Ajout d'attributs à phoneInput qui vont régir les zones de saisies et en définir les particularités
+            // on indique que la zone de saisie est un tel donc des numéro à saisir 
+            phoneInput.setAttribute("type", "tel");
+            // on attribut un name unique à chaques différentes lignes de saisie, phone[] renvoi à une tableau donc affichera comme name: phone0, phone1, phone2, ...
+            phoneInput.setAttribute("name", "phone[]");
+            // Créer un attribut qui permettera d'avoir une expression régulière qui oblige l'utilisateur à écrire selon ce que l'on veut, sinon ce n'est pas validé (on a pas encore vu cela mais bon à faire)
+            // insertion du champ texte dans le conteneur
+            phoneDiv.appendChild(phoneInput);
+            // Insertion dans le DOM
+            $phoneList.appendChild(phoneDiv);
+        }
+        // Appel de la fonction 
+        $btAddPhone.onclick = addPhone;
+    </script>
+
+</body>
+</html>

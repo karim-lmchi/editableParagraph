@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Title </title>
+</head>
+
+<style>
+    /* Création du style de ma div pour avoir un contour plus jolie à l'affichae */
+    div {
+        text-align: center;
+        border: 1px solid black;
+        width: 400px;
+        height: 200px;
+    }
+</style>
+
+<body>
+    <!-- Div qui affichera le message d'alerte, span me permet d'isoler la parti de mon texte qui changera -->
+    <div id="zoneAlert">
+        ATTENTION !!! Cette fenêtre se fermera dans <span id="compteur"></span> secondes
+    </div>
+
+    <script>
+        
+        // Initialisation du compte à rebours
+        var compteur = 10;
+        // Variables pointant mes éléments nécessaires
+        $zoneAlert = document.getElementById("zoneAlert");
+        $compteur = document.getElementById("compteur");
+        // Attribution du texte dans le span
+        $compteur.textContent = compteur;
+        
+        // Réglage du compteur, setInterval(callback,delay), avec une fonnction en callback qui décrément une valeur de 1 à la valeur du compteur et un delay de 1 seconde entre chaque appel de la fonction
+        var ticTac = setInterval(
+            () => {
+                compteur--;
+                $compteur.textContent = compteur;
+            },
+            1000
+        );
+        
+        // Réglage de l'arrêt du compteur possédant un callback et un delay également
+        setTimeout(
+            () => {
+                // ClearInterval sert à indiquer qu'il ne faut plus faire appel à ticTac
+                clearInterval(ticTac);
+                // Sert à ne plus afficher la zone de texte à la fin du compteur
+                $zoneAlert.style.display = "none";
+            },
+            // temps au bout duquel setTimeout s'active, il désactive donc setInterval au bout de 10 * 1000 millisecondes
+            compteur * 1000
+        );
+    </script>
+
+</body>
+</html>
